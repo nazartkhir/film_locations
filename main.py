@@ -6,3 +6,4 @@ import argparse
 def main():
     pass
     x = 5
+    y = 7
