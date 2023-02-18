@@ -4,7 +4,7 @@ def read():
     return data
 
 def clean(data):
-    with open('new_locations', 'w',encoding='UTF-8') as file:
+    with open('new_locations.txt', 'w',encoding='UTF-8') as file:
         locations = set()
         for row in data:
             if '{' not in row:
@@ -18,12 +18,13 @@ def clean(data):
                             else:
                                 locations.add(loc)
                             if row[year+1:year+4].isnumeric():
-                                if 'Federal' not in row:
-                                    tf = False
-                                    for char in row:
-                                        if ord(char) > 127:
-                                            tf = True
-                                    if not tf:
-                                        file.write(row)
-                                        file.write('\n')
+                                if row.find(')') - row.find('(') == 5:
+                                    if 'Federal' not in row:
+                                        tf = False
+                                        for char in row:
+                                            if ord(char) > 127:
+                                                tf = True
+                                        if not tf:
+                                            file.write(row)
+                                            file.write('\n')
 clean(read())
