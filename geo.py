@@ -1,4 +1,7 @@
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderUnavailable
+from geopy.exc import GeocoderServiceError
+
 
 def read():
     with open('new_locations.csv', encoding='UTF-8') as file:
@@ -22,8 +25,8 @@ def write_cords(a, b):
                 row.append(str(cords[1]))
                 file.write('|'.join(row))
                 file.write('\n')
-            except AttributeError:
+            except (AttributeError, GeocoderUnavailable, TimeoutError, GeocoderServiceError):
                 continue
             
 
-write_cords(150,200)
+write_cords(14000,15000)
