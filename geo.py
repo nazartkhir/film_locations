@@ -29,4 +29,4 @@ def write_cords(a, b):
                 continue
             
 
-write_cords(26000,27000)
+write_cords(0,27000)
