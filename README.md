@@ -18,3 +18,8 @@ python3 main.py 2011 49.49 28 /Users/nazartkhir/Work/op/week21/film_locations/fi
 ```
 
 ![example](example.png)
+
+## Coclusion
+
+On the map we can see 10 closets film sets to given location.
+Also, as a bonus, we can see countries that have larger area than Ukraine (red), smaller(green) and Ukraine itself(blue)
