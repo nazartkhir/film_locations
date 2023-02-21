@@ -38,7 +38,15 @@ def generate_map(df):
         fg.add_child(folium.Marker(location=[row['latitude'], row['longitude']],
                             popup=row['name'],
                             icon=folium.Icon()))
+    fg_pp = folium.FeatureGroup(name="Population")
+    fg_pp.add_child(folium.GeoJson(data=open('world.json', 'r',
+                                            encoding='utf-8-sig').read(),
+                                  style_function=lambda x: {'fillColor':
+          'blue' if (x['properties']['AREA']) == 57935
+      else 'green' if (x['properties']['AREA']) < 57935
+      else 'red'}))
     map.add_child(fg)
+    map.add_child(fg_pp)
     map.save('film_locations.html')
     
 
