@@ -13,9 +13,13 @@ def main():
     Main function that runs everything
     """
     args = parse_data()
+    if int(args.year > 1900):
+        print("Please provide a year that is >= 1900")
+        return 0
     df = pd.read_csv(args.path, delimiter='|')
     top_df = calculate_closest(df, args)
     generate_map(top_df)
+    return 0
 
 def parse_data():
     """

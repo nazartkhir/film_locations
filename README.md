@@ -17,3 +17,4 @@ pip install folium
 python3 main.py 2011 49.49 28 /Users/nazartkhir/Work/op/week21/film_locations/final_dataset.csv
 ```
 
+![example](example.png)
