@@ -33,7 +33,6 @@ def clean_and_write(data):
                                     if not tf:
                                         ans.append(row)
     with open("new_locations.csv", 'w', encoding='UTF-8') as file:
-        #file.write('name|year|address\n')
         for row in ans:
             first = row.find('(')
             last = row.find(')')

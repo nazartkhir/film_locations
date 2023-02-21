@@ -1,14 +1,45 @@
 """
 This module will generate a map of closest film sets to any location.
-User has to provide the year and the coordinates.
+User has to provide the year, the coordinates and a path to the dataset.
 """
 
 import argparse
 import haversine
+import pandas as pd
+import folium
+
+def main():
+    args = parse_data()
+    df = pd.read_csv(args.path, delimiter='|')
+    top_df = calculate_nearest(df, args)
+    generate_map(top_df)
 
 def parse_data():
-    parser = argparse.ArgumentParser(description='This program will show you nearest filming locations to your coordinates during a certain year')
-    parser.add_argument("year", help="a year that you want to see the locations for")
-    parser.add_argument("latitude", help="latitude of your location")
-    parser.add_argument("longitute", help="longitude of your location")
+    parser = argparse.ArgumentParser(description='This program will generate a map of closest film sets to any location during a certain year')
+    parser.add_argument("year", help="a year that you want to see the locations for", type=int)
+    parser.add_argument("latitude", help="latitude of a location", type=float)
+    parser.add_argument("longitude", help="longitude of a location", type=float)
+    parser.add_argument("path", help="path to the dataset", type=str)
     args = parser.parse_args()
+    return args
+
+def calculate_nearest(df, args):
+    df = df[df['year'] == args.year]
+    for i, row in df.iterrows():
+        distance = haversine.haversine((args.latitude, args.longitude), (row['latitude'], row['longitude']))
+        df.loc[i, 'distance'] = distance
+    df = df.sort_values('distance')[:10]
+    return df
+
+def generate_map(df):
+    map = folium.Map()
+    fg = folium.FeatureGroup(name="Film locations")
+    for _, row in df.iterrows():
+        fg.add_child(folium.Marker(location=[row['latitude'], row['longitude']],
+                            popup=row['name'],
+                            icon=folium.Icon()))
+    map.add_child(fg)
+    map.save('film_locations.html')
+    
+
+main()
