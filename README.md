@@ -2,7 +2,7 @@
 
 Film_location is a project that generates a map of film sets closesest to the location, that user provides.
 
-## Requirments
+## Requirements
 
 ```bash
 pip install pandas
